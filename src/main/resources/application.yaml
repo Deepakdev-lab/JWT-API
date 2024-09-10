@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: jwtapi
+  datasource:
+    url: jdbc:h2:mem:devK
+    driverClassName: org.h2.Driver
+  jpa:
+    defer-datasource-initialization: true #it creates the SQL script (data1.sql // naming convention is important) from resources folder at the time of startup
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
