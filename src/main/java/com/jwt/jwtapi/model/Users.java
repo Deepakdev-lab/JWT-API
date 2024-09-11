@@ -14,4 +14,5 @@ public class Users {
     private int userId;
     private String userName;
     private String emailId;
+    private String userPassword;
 }

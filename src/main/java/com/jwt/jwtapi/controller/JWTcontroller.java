@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -42,7 +44,15 @@ public class JWTcontroller {
     @GetMapping("/getJWTToken")
     public ResponseEntity<?> getJWTToken(){
         try {
-            UserDetails userDetails = userDetailsService.loadUserByUsername("Dev"); // Replace "Dev" with the desired username
+//            UserDetails userDetails = userDetailsService.loadUserByUsername("Dev"); // Replace "Dev" with the desired username
+//            if (userDetails == null) {
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+//            }
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+
+            // Load the user details using the username from Basic Auth
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (userDetails == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
